@@ -9,6 +9,7 @@ import { ONE_HUNDRED, SIXTY } from './core/constants';
 import { logger } from 'env-var';
 import log from './utils/logger';
 import { envs } from './core/config/env';
+import dotenv from 'dotenv'
 
 
 // Créer un stream pour Morgan avec niveau HTTP spécifique
@@ -35,6 +36,13 @@ app.use(morgan('combined', {
 	stream: morganStream
 }));
 app.use("/", user)
+
+// Charger les variables d'environnement
+dotenv.config();
+
+log.info('Port:', process.env.PORT);
+log.info('MongoDB Host:', process.env.MONGO_HOST);
+
 setupSwagger(app);
 app.listen(envs.PORT, () => {
 	log.info(`Server running on port http://localhost:${envs.PORT}/`);

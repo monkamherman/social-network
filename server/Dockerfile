@@ -1,16 +1,21 @@
+# Utiliser une image Node.js optimisée
 FROM node:20-alpine
 
+# Définir le répertoire de travail
 WORKDIR /app
 
+# Copier les fichiers package.json et package-lock.json (ou yarn.lock)
 COPY package*.json ./
-COPY yarn.lock ./
 
-RUN yarn install
+# Utiliser un cache pour éviter de réinstaller les dépendances si elles n'ont pas changé
+RUN yarn install --frozen-lockfile
 
+
+# Copier le reste du code
 COPY . .
 
-RUN yarn build
+# Exposer le port de l'API
+EXPOSE 5000
 
-EXPOSE 3000
-
-CMD ["yarn", "start"]
+# Démarrer le serveur
+CMD ["yarn", "run", "dev"]
