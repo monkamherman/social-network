@@ -44,7 +44,10 @@ log.info('Port:', process.env.PORT);
 log.info('MongoDB Host:', process.env.MONGO_HOST);
 
 setupSwagger(app);
-app.listen(envs.PORT, () => {
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
 	log.info(`Server running on port http://localhost:${envs.PORT}/`);
 	log.info(`Documentation  : http://localhost:${envs.PORT}/api-docs`);
 });
