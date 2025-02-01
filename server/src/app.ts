@@ -6,7 +6,6 @@ import { setupSwagger } from './swagger';
 import morgan from 'morgan';
 import { ONE_HUNDRED, SIXTY } from './core/constants';
 import { logger } from 'env-var';
-import log from './utils/logger';
 import { envs } from './core/config/env'; // Importation correcte de envs
 
 // Créer un stream pour Morgan avec niveau HTTP spécifique
