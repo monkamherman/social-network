@@ -1,10 +1,15 @@
+// import {  CONNECTION_STRING } from './env';
 import winston, { createLogger, format, transports } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import { envs } from './env';
 import { MongoDB } from 'winston-mongodb';
+import { CONNECTION_STRING } from './env';
 
 const { colorize, align } = winston.format;
 
+const envs = {
+    NODE_ENV: 'development', // Remplacez par la valeur souhaitée
+    CONNECTION_STRING: 'mongodb://user:password@localhost:27017/mydb', // Remplacez par la valeur souhaitée
+}
 // Definir le niveau de log en fonction de l'environement... Ceci pour filtrer certains log et ne pas les envoyer en production 
 const logLevel = envs.NODE_ENV === 'production' ? 'warn' : 'debug';
 
@@ -35,7 +40,7 @@ const errorTransport = createTransport('errors', 'error', 30);
 
 // Configuration du transporteur MongoDB
 const mongoTransport = new MongoDB({
-    db: envs.DATABASE_URL, // URL de connexion à la base de données
+    db: CONNECTION_STRING, // URL de connexion à la base de données
     options: {
         maxPoolSize: 200, // nombre de pool de connion simultanée sur mongo
     }, 

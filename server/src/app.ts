@@ -1,5 +1,4 @@
 // src/server.ts
-// Configurations de Middlewares
 import express from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
@@ -8,46 +7,47 @@ import morgan from 'morgan';
 import { ONE_HUNDRED, SIXTY } from './core/constants';
 import { logger } from 'env-var';
 import log from './utils/logger';
-import { envs } from './core/config/env';
-import dotenv from 'dotenv'
-
+import { envs } from './core/config/env'; // Importation correcte de envs
 
 // Créer un stream pour Morgan avec niveau HTTP spécifique
 const morganStream = {
-	write: (message: string) => {
-		logger('http', message.trim()); // Utilise le format correct pour le logger
-	}
+    write: (message: string) => {
+        logger('http', message.trim()); // Utilise le format correct pour le logger
+    }
 };
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
+
 import user from './routes/route';
 app.use(
-	rateLimit({
-		max: ONE_HUNDRED,
-		windowMs: SIXTY,
-		message: 'Trop de Requete à partir de cette adresse IP '
-	})
+    rateLimit({
+        max: ONE_HUNDRED,
+        windowMs: SIXTY,
+        message: 'Trop de Requête à partir de cette adresse IP'
+    })
 );
 
 app.use(morgan('combined', {
-	stream: morganStream
+    stream: morganStream
 }));
-app.use("/", user)
+app.use("/", user);
+app.get('/test', (req, res) => {
+	res.status(200).json({ message: 'Le serveur fonctionne correctement !' });
+	
+});
 
-// Charger les variables d'environnement
-dotenv.config();
-
-log.info('Port:', process.env.PORT);
-log.info('MongoDB Host:', process.env.MONGO_HOST);
+// Log des variables d'environnement pour débogage
+console.log('Port:', envs.PORT);
+console.log('MongoDB Host:', envs.MONGO_HOST);
 
 setupSwagger(app);
 
-const PORT = process.env.PORT || 3000;
+const PORT = envs.PORT;
 
 app.listen(PORT, () => {
-	log.info(`Server running on port http://localhost:${envs.PORT}/`);
-	log.info(`Documentation  : http://localhost:${envs.PORT}/api-docs`);
+    console.log(`Server running on port http://localhost:${envs.PORT}/`);
+    console.log(`Documentation  : http://localhost:${envs.PORT}/api-docs`);
 });
