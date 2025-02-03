@@ -1,0 +1,245 @@
+/* PARALLAX MAGIC */
+
+/* see Keith Clark's excellent article for further explanation: */
+/* https://keithclark.co.uk/articles/pure-css-parallax-websites/ */
+
+[data-parallax='container'] {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  perspective: 300px;
+  perspective-origin: center;
+}
+
+[data-parallax='group'] {
+  height: 500px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+[data-parallax='layer'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform-origin: center;
+}
+
+[data-parallax='none'] {
+  position: relative;
+  transform: translateZ(0);
+  z-index: 10;
+}
+
+[data-parallax-speed='front'] {
+  transform: translateZ(90px) scale(0.7);
+  z-index: 1;
+}
+
+[data-parallax-speed='base'] {
+  transform: translateZ(0);
+  z-index: 4;
+}
+
+[data-parallax-speed='slow'] {
+  transform: translateZ(-300px) scale(2);
+  z-index: 3;
+}
+
+[data-parallax-speed='slower'] {
+  transform: translateZ(-600px) scale(3);
+  z-index: 2;
+}
+
+[data-parallax-speed='slowest'] {
+  transform: translateZ(-900px) scale(4);
+  z-index: 1;
+}
+
+/* • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • */
+
+
+/* reset'ish */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 125%;
+  line-height: 1.5;
+  color: #333;
+}
+
+h2,
+p {
+  max-width: 40rem;
+}
+
+/* IMAGES */
+[data-image] {
+  background-size: cover;
+  background-position: center top;
+  position: absolute;
+}
+
+[data-image='captain-america'] {
+  width: 20vw;
+  left: -120vw;
+  background-image: url('https://aepicos.com/codepen/images/captain-america.png');
+}
+
+[data-image='scarlet-witch'] {
+  width: 20vw;
+  left: -20vw;
+  background-image: url('https://aepicos.com/codepen/images/scarlet-witch.png');
+}
+
+[data-image='black-widow'] {
+  width: 20vw;
+  left: 40vw;
+  background-image: url('https://aepicos.com/codepen/images/black-widow.png');
+}
+
+[data-image='vision'] {
+  width: 20vw;
+  left: 100vw;
+  background-image: url('https://aepicos.com/codepen/images/vision.png');
+}
+
+[data-image='iron-man'] {
+  width: 20vw;
+  left: 200vw;
+  background-image: url('https://aepicos.com/codepen/images/iron-man.png');
+  background-position: 80% 0%;
+}
+
+/* SECTION STYLING */
+.preamble,
+.parallax,
+.plot--content,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10vmin;
+}
+
+@media (min-width: 60rem) {
+  .preamble,
+  .parallax,
+  .plot--content,
+  footer {
+    padding-top: 20vmin;
+    padding-bottom: 20vmin;
+  }
+}
+
+/* HEADER */
+header[data-parallax='group'] {
+  height: 100vh;
+}
+
+.title {
+  width: 80vw;
+  height: auto;
+  padding: 2rem 0;
+  position: absolute;
+  top: 60vh;
+  left: 10vw;
+  z-index: 10;
+  transform: translateZ(-150px) scale(1.5) skewY(-10deg);
+  background-color: white;
+  text-align: center;
+}
+
+.title h1 {
+  font-size: 12vw;
+  color: #214;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+}
+
+.title h1 span {
+  font-size: 6vw;
+  letter-spacing: 0.24em;
+}
+
+.title p {
+  margin-top: 1ex;
+  color: purple;
+}
+
+/* PARALLAX STYLING */
+.parallax {
+  color: white;
+  overflow: hidden;
+  background-color: black;
+}
+
+.parallax p {
+  text-shadow: 0 0 2px black;
+}
+
+.stars,
+.deep-stars {
+  top: -10vh;
+  bottom: -10vh;
+  z-index: -1;
+  background-image: url('https://aepicos.com/codepen/images/blue-star-sky.png');
+}
+
+.stars {
+  background-size: 200%;
+  opacity: 0.8;
+}
+
+.deep-stars {
+  background-size: cover;
+  opacity: 0.5;
+}
+
+/* FOOTER */
+footer {
+  min-height: 100vh;
+  background-color: black;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+}
+
+footer h3 {
+  margin-bottom: 4rem;
+  font-size: 10vw;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+footer h3 small {
+  display: block;
+  font-size: 5vw;
+  letter-spacing: 0.24em;
+}
+
+footer p {
+  width: 70%;
+  margin-top: 1em;
+}
+
+footer a {
+  color: #ccc;
+}
+
+/* ADDITIONAL FIXES */
+.todo {
+  padding: 1rem 10vmin;
+  color: white;
+  background-color: crimson;
+  line-height: 1.3;
+}
